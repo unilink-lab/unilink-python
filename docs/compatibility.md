@@ -7,7 +7,16 @@ C++ core library.
 
 | unilink-python | unilink core |
 |---|---|
-| 0.1.x | 0.7.x / 0.8.x |
+| 0.7.x | 0.7.x |
+
+## Versioning
+
+unilink-python follows the unilink C++ core release line. For example,
+unilink-python 0.7.x targets the unilink C++ core 0.7.x release line.
+
+Patch releases may contain Python packaging, binding, documentation, or CI fixes
+without requiring a matching unilink core patch release, as long as they remain
+compatible with the same core minor release line.
 
 ## Stability
 

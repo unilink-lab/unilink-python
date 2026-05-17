@@ -70,7 +70,12 @@ UNILINK_PYTHON_RUN_LOOPBACK_TESTS=1 python -m pytest -q -m "integration"
 
 ## Compatibility
 
-unilink-python 0.1.x targets unilink C++ core 0.7.x / 0.8.x.
+unilink-python follows the unilink C++ core release line. For example,
+unilink-python 0.7.x targets the unilink C++ core 0.7.x release line.
+
+Patch releases may contain Python packaging, binding, documentation, or CI fixes
+without requiring a matching unilink core patch release, as long as they remain
+compatible with the same core minor release line.
 
 The Python package is currently experimental until the C++ public API reaches a
 stable release line.
