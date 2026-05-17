@@ -48,7 +48,10 @@ jobs:
       - name: Install system deps on macOS
         if: runner.os == 'macOS'
         run: |
-          brew install cmake ninja boost
+          brew install cmake ninja
+          git clone https://github.com/microsoft/vcpkg.git vcpkg
+          ./vcpkg/bootstrap-vcpkg.sh
+          ./vcpkg/vcpkg install boost-asio boost-system --triplet arm64-osx
 
       - name: Install system deps on Windows
         if: runner.os == 'Windows'
@@ -58,11 +61,19 @@ jobs:
           ./vcpkg/bootstrap-vcpkg.bat
           ./vcpkg/vcpkg install boost-asio boost-system --triplet x64-windows-static-md
 
-      - name: Build and install package on Linux/macOS
-        if: runner.os != 'Windows'
+      - name: Build and install package on Linux
+        if: runner.os == 'Linux'
         run: |
           python -m pip install . \
             --config-settings=cmake.define.UNILINK_CORE_SOURCE_DIR=${{ github.workspace }}/unilink-core
+
+      - name: Build and install package on macOS
+        if: runner.os == 'macOS'
+        run: |
+          python -m pip install . \
+            --config-settings=cmake.define.UNILINK_CORE_SOURCE_DIR=${{ github.workspace }}/unilink-core \
+            --config-settings=cmake.define.CMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake \
+            --config-settings=cmake.define.VCPKG_TARGET_TRIPLET=arm64-osx
 
       - name: Build and install package on Windows
         if: runner.os == 'Windows'
