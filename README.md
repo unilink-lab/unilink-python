@@ -14,6 +14,14 @@ lives in the main unilink repository.
 - Compiled extension: `unilink._core`
 - Backward compatibility shim: `unilink_py`
 
+## Documentation
+
+- Installation: [docs/installation.md](docs/installation.md)
+- API overview: [docs/api.md](docs/api.md)
+- Compatibility: [docs/compatibility.md](docs/compatibility.md)
+- Release policy: [docs/release.md](docs/release.md)
+- Changelog: [CHANGELOG.md](CHANGELOG.md)
+
 The first split release keeps the existing binding API surface. It does not add
 new transport functionality.
 

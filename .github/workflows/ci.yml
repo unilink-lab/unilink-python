@@ -49,15 +49,37 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install cmake ninja
-          git clone https://github.com/microsoft/vcpkg.git vcpkg
+
+      - name: Checkout vcpkg
+        if: runner.os == 'macOS' || runner.os == 'Windows'
+        uses: actions/checkout@v4
+        with:
+          repository: microsoft/vcpkg
+          path: vcpkg
+
+      - name: Cache vcpkg packages
+        if: runner.os == 'macOS' || runner.os == 'Windows'
+        uses: actions/cache@v4
+        with:
+          path: |
+            vcpkg/buildtrees
+            vcpkg/downloads
+            vcpkg/installed
+            vcpkg/packages
+          key: ${{ runner.os }}-vcpkg-${{ hashFiles('.github/workflows/ci.yml', 'vcpkg/builtin-baseline', 'vcpkg/ports/boost-asio/**', 'vcpkg/ports/boost-system/**') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-
+
+      - name: Install vcpkg deps on macOS
+        if: runner.os == 'macOS'
+        run: |
           ./vcpkg/bootstrap-vcpkg.sh
           ./vcpkg/vcpkg install boost-asio boost-system --triplet arm64-osx
 
-      - name: Install system deps on Windows
+      - name: Install vcpkg deps on Windows
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          git clone https://github.com/microsoft/vcpkg.git vcpkg
           ./vcpkg/bootstrap-vcpkg.bat
           ./vcpkg/vcpkg install boost-asio boost-system --triplet x64-windows-static-md
 
