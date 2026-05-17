@@ -109,10 +109,10 @@ install_and_test() {
 
   section "Installing Python tooling for ${name}"
   "$python" -m pip install -U pip
-  "$python" -m pip install pytest
+  "$python" -m pip install pytest scikit-build-core "pybind11>=2.11,<3"
 
   section "Installing unilink-python via ${name}"
-  "$python" -m pip install . "$@"
+  "$python" -m pip install . --no-build-isolation "$@"
 
   section "Running smoke tests for ${name}"
   run_python_smoke "$python"
