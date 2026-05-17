@@ -64,7 +64,7 @@ jobs:
 
       - name: Cache vcpkg packages
         if: runner.os == 'macOS' || runner.os == 'Windows'
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             vcpkg/buildtrees
