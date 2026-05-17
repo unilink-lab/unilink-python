@@ -29,9 +29,32 @@ python -m pip install . \
   -Ccmake.define.CMAKE_PREFIX_PATH=../unilink-install
 ```
 
+## Install with vcpkg
+
+The repository includes a `vcpkg.json` manifest that depends on
+`jwsung91-unilink`. Use a vcpkg checkout that contains `jwsung91-unilink` 0.7.2
+or newer.
+
+```bash
+export VCPKG_ROOT=/path/to/vcpkg
+
+python -m pip install . \
+  -Ccmake.define.CMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+```
+
 ## Smoke test
 
 ```bash
 python -c "import unilink; print(unilink.__version__)"
 python -c "import unilink_py"
 ```
+
+## Local verification
+
+```bash
+scripts/verify.sh --core-source ../unilink
+```
+
+Set `VCPKG_ROOT` to run vcpkg validation, or pass `--skip-vcpkg`. Add
+`--installed-prefix /path/to/unilink/install` to validate against an installed
+core package.

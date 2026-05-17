@@ -19,6 +19,7 @@ lives in the main unilink repository.
 - Installation: [docs/installation.md](docs/installation.md)
 - API overview: [docs/api.md](docs/api.md)
 - Compatibility: [docs/compatibility.md](docs/compatibility.md)
+- Contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
 - Release policy: [docs/release.md](docs/release.md)
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 
@@ -56,6 +57,18 @@ python -m pip install . \
   -Ccmake.define.CMAKE_PREFIX_PATH=../unilink-install
 ```
 
+### vcpkg core package
+
+The repository includes a `vcpkg.json` manifest that depends on
+`jwsung91-unilink`.
+
+```bash
+export VCPKG_ROOT=/path/to/vcpkg
+
+python -m pip install . \
+  -Ccmake.define.CMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+```
+
 ## Import Smoke
 
 ```bash
@@ -75,6 +88,16 @@ explicitly requested:
 ```bash
 UNILINK_PYTHON_RUN_LOOPBACK_TESTS=1 python -m pytest -q -m "integration"
 ```
+
+For local validation across supported core consumption paths, use:
+
+```bash
+scripts/verify.sh --core-source ../unilink
+```
+
+Set `VCPKG_ROOT` to enable the vcpkg path, or pass `--skip-vcpkg` when it is
+not applicable. Add `--installed-prefix /path/to/unilink/install` to validate
+against an installed core package.
 
 ## Compatibility
 

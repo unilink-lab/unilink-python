@@ -26,8 +26,7 @@ include(cmake/FindOrBuildUnilinkCore.cmake)
 set(UNILINK_VERSION ${PROJECT_VERSION})
 configure_file(
   bindings/python/module.cpp.in
-  "${CMAKE_CURRENT_BINARY_DIR}/generated/module.cpp"
-  @ONLY
+  "${CMAKE_CURRENT_BINARY_DIR}/generated/module.cpp" @ONLY
 )
 
 pybind11_add_module(_core "${CMAKE_CURRENT_BINARY_DIR}/generated/module.cpp")
@@ -40,5 +39,9 @@ elseif(UNIX)
   set_target_properties(_core PROPERTIES INSTALL_RPATH "$ORIGIN")
 endif()
 
-install(TARGETS _core LIBRARY DESTINATION unilink RUNTIME DESTINATION unilink)
+install(
+  TARGETS _core
+  LIBRARY DESTINATION unilink
+  RUNTIME DESTINATION unilink
+)
 install(FILES src/unilink_py.py DESTINATION .)

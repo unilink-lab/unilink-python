@@ -1,0 +1,7 @@
+{
+  "name": "unilink-python",
+  "version-string": "0.7.2",
+  "dependencies": [
+    "jwsung91-unilink"
+  ]
+}

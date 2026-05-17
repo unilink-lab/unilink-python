@@ -77,7 +77,9 @@ if(UNILINK_CORE_SOURCE_DIR)
       CACHE BOOL "" FORCE
   )
 
-  add_subdirectory("${UNILINK_CORE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/unilink-core")
+  add_subdirectory(
+    "${UNILINK_CORE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/unilink-core"
+  )
   _unilink_python_select_core_target()
 else()
   message(STATUS "Using installed unilink CMake package")

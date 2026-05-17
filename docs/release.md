@@ -20,7 +20,7 @@ compatible with the same core minor release line.
 1. Confirm the target unilink core release line.
 2. Update `pyproject.toml`, `CMakeLists.txt`, and `src/unilink/_version.py`.
 3. Update `CHANGELOG.md` and `docs/compatibility.md`.
-4. Run local smoke tests against the matching core source tree.
+4. Run local verification against the supported core consumption paths.
 5. Push the release commit and confirm CI passes on Linux, macOS, and Windows.
 6. Create and push the matching git tag, for example `v0.7.2`.
 7. Confirm the Release workflow uploaded the source distribution and wheels to
@@ -29,12 +29,17 @@ compatible with the same core minor release line.
 ## Local Verification
 
 ```bash
-python -m pip install -e . \
-  -Ccmake.define.UNILINK_CORE_SOURCE_DIR=../unilink
+scripts/verify.sh --core-source ../unilink
+```
 
-python -c "import unilink; print(unilink.__version__)"
-python -c "import unilink_py"
-python -m pytest -q -m "not serial and not integration"
+Set `VCPKG_ROOT` to a vcpkg checkout that contains `jwsung91-unilink` 0.7.2 or
+newer. To include installed-package validation, first install the matching core
+release and pass the prefix:
+
+```bash
+scripts/verify.sh \
+  --core-source ../unilink \
+  --installed-prefix ../unilink-install
 ```
 
 ## Release Assets
