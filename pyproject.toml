@@ -1,0 +1,47 @@
+[build-system]
+requires = [
+  "scikit-build-core>=0.8",
+  "pybind11>=2.11",
+]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "unilink"
+version = "0.1.0"
+description = "Python bindings for the unilink C++ communication library"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "Apache-2.0" }
+authors = [
+  { name = "Jinwoo Sung" },
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: C++",
+  "Programming Language :: C++ :: 20",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS",
+  "Operating System :: Microsoft :: Windows",
+]
+
+[project.urls]
+Homepage = "https://github.com/unilink-lab/unilink-python"
+Core = "https://github.com/jwsung91/unilink"
+
+[tool.scikit-build]
+minimum-version = "build-system.requires"
+build-dir = "build/{wheel_tag}"
+wheel.packages = ["src/unilink"]
+
+[tool.scikit-build.cmake]
+version = ">=3.21"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "integration: tests requiring local sockets or runtime loopback",
+  "serial: tests requiring serial devices",
+]

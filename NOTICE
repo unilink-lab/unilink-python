@@ -1,0 +1,4 @@
+unilink-python
+
+This package contains Python bindings migrated from the unilink C++ core
+repository.
