@@ -104,15 +104,22 @@ run_tests() {
 install_and_test() {
   local name="$1"
   shift
+  local install_args=("$@")
   local python
   python="$(create_venv "$name")"
 
   section "Installing Python tooling for ${name}"
   "$python" -m pip install -U pip
-  "$python" -m pip install pytest
+  "$python" -m pip install pytest scikit-build-core "pybind11>=2.11,<3"
+
+  if [[ "$name" == "installed" ]]; then
+    install_args+=(
+      "--config-settings=cmake.define.pybind11_DIR=$("$python" -m pybind11 --cmakedir)"
+    )
+  fi
 
   section "Installing unilink-python via ${name}"
-  "$python" -m pip install . "$@"
+  "$python" -m pip install . --no-build-isolation "${install_args[@]}"
 
   section "Running smoke tests for ${name}"
   run_python_smoke "$python"
