@@ -101,12 +101,14 @@ against an installed core package.
 
 ## Compatibility
 
-unilink-python follows the unilink C++ core release line. For example,
-unilink-python 0.7.x targets the unilink C++ core 0.7.x release line.
+unilink-python follows the same minor release line as the unilink C++ core.
 
-Patch releases may contain Python packaging, binding, documentation, or CI fixes
-without requiring a matching unilink core patch release, as long as they remain
-compatible with the same core minor release line.
+| unilink-python | unilink core |
+|---|---|
+| 0.7.x | 0.7.x |
+
+Patch versions may differ when Python-only packaging, binding, documentation, or
+CI fixes do not require a matching core patch release.
 
 The Python package is currently experimental until the C++ public API reaches a
 stable release line.

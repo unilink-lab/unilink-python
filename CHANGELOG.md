@@ -2,6 +2,14 @@
 
 All notable changes to unilink-python are documented in this file.
 
+## v0.7.3
+
+### Changed
+
+- Synced Python package metadata with the unilink C++ core 0.7.3 release line.
+- Updated CI to validate against unilink core `v0.7.3`.
+- Clarified minor-line compatibility policy for `unilink-python`.
+
 ## v0.7.2
 
 Initial split release aligned with unilink C++ core 0.7.2.

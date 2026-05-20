@@ -5,18 +5,27 @@
 unilink-python does not implement transports itself. It binds to the unilink
 C++ core library.
 
-| unilink-python | unilink core |
+| unilink-python | Supported unilink core |
 |---|---|
 | 0.7.x | 0.7.x |
 
+## Validated core versions
+
+The current release line is validated against:
+
+| unilink-python | Validated unilink core refs |
+|---|---|
+| 0.7.3 | v0.7.3 |
+
+Additional patch versions in the same minor line may also work, but CI
+validation tracks the versions listed above.
+
 ## Versioning
 
-unilink-python follows the unilink C++ core release line. For example,
-unilink-python 0.7.x targets the unilink C++ core 0.7.x release line.
+unilink-python follows the unilink C++ core minor release line.
 
-Patch releases may contain Python packaging, binding, documentation, or CI fixes
-without requiring a matching unilink core patch release, as long as they remain
-compatible with the same core minor release line.
+Patch versions may differ when Python packaging, binding, documentation, or CI
+fixes do not require a matching unilink core patch release.
 
 ## Stability
 
