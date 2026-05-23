@@ -42,3 +42,18 @@ def test_standard_python_surface_uses_canonical_names():
 
     assert hasattr(unilink.MessageContext, "client_info")
     assert not hasattr(unilink.MessageContext, "remote_address")
+
+
+def test_backpressure_properties_are_write_only():
+    import pytest
+    import unilink
+
+    client = unilink.TcpClient("127.0.0.1", 65535)
+
+    client.backpressure_threshold = 32
+    client.backpressure_strategy = unilink.BackpressureStrategy.BestEffort
+
+    with pytest.raises(AttributeError):
+        _ = client.backpressure_threshold
+    with pytest.raises(AttributeError):
+        _ = client.backpressure_strategy

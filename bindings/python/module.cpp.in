@@ -11,6 +11,20 @@ namespace py = pybind11;
 using namespace unilink;
 using namespace unilink::wrapper;
 
+namespace {
+
+template <typename Channel>
+size_t write_only_backpressure_threshold(const Channel&) {
+  throw py::attribute_error("backpressure_threshold is write-only");
+}
+
+template <typename Channel>
+base::constants::BackpressureStrategy write_only_backpressure_strategy(const Channel&) {
+  throw py::attribute_error("backpressure_strategy is write-only");
+}
+
+}  // namespace
+
 PYBIND11_MODULE(_core, m) {
   m.doc() = "unilink python bindings";
   m.attr("__version__") = "@UNILINK_VERSION@";
@@ -198,9 +212,9 @@ PYBIND11_MODULE(_core, m) {
              });
              return &self;
            })
-      .def_property("backpressure_threshold", nullptr,
+      .def_property("backpressure_threshold", &write_only_backpressure_threshold<TcpClient>,
                     [](TcpClient& self, size_t v) { self.backpressure_threshold(v); })
-      .def_property("backpressure_strategy", nullptr,
+      .def_property("backpressure_strategy", &write_only_backpressure_strategy<TcpClient>,
                     [](TcpClient& self, base::constants::BackpressureStrategy s) { self.backpressure_strategy(s); });
 
   // TcpServer
@@ -316,9 +330,9 @@ PYBIND11_MODULE(_core, m) {
              });
              return &self;
            })
-      .def_property("backpressure_threshold", nullptr,
+      .def_property("backpressure_threshold", &write_only_backpressure_threshold<TcpServer>,
                     [](TcpServer& self, size_t v) { self.backpressure_threshold(v); })
-      .def_property("backpressure_strategy", nullptr,
+      .def_property("backpressure_strategy", &write_only_backpressure_strategy<TcpServer>,
                     [](TcpServer& self, base::constants::BackpressureStrategy s) { self.backpressure_strategy(s); });
 
   // Serial
@@ -429,8 +443,9 @@ PYBIND11_MODULE(_core, m) {
              });
              return &self;
            })
-      .def_property("backpressure_threshold", nullptr, [](Serial& self, size_t v) { self.backpressure_threshold(v); })
-      .def_property("backpressure_strategy", nullptr,
+      .def_property("backpressure_threshold", &write_only_backpressure_threshold<Serial>,
+                    [](Serial& self, size_t v) { self.backpressure_threshold(v); })
+      .def_property("backpressure_strategy", &write_only_backpressure_strategy<Serial>,
                     [](Serial& self, base::constants::BackpressureStrategy s) { self.backpressure_strategy(s); });
 
   // UdsClient
@@ -538,9 +553,9 @@ PYBIND11_MODULE(_core, m) {
              });
              return &self;
            })
-      .def_property("backpressure_threshold", nullptr,
+      .def_property("backpressure_threshold", &write_only_backpressure_threshold<UdsClient>,
                     [](UdsClient& self, size_t v) { self.backpressure_threshold(v); })
-      .def_property("backpressure_strategy", nullptr,
+      .def_property("backpressure_strategy", &write_only_backpressure_strategy<UdsClient>,
                     [](UdsClient& self, base::constants::BackpressureStrategy s) { self.backpressure_strategy(s); });
 
   // UdsServer
@@ -653,9 +668,9 @@ PYBIND11_MODULE(_core, m) {
              });
              return &self;
            })
-      .def_property("backpressure_threshold", nullptr,
+      .def_property("backpressure_threshold", &write_only_backpressure_threshold<UdsServer>,
                     [](UdsServer& self, size_t v) { self.backpressure_threshold(v); })
-      .def_property("backpressure_strategy", nullptr,
+      .def_property("backpressure_strategy", &write_only_backpressure_strategy<UdsServer>,
                     [](UdsServer& self, base::constants::BackpressureStrategy s) { self.backpressure_strategy(s); });
 
   // UdpConfig
@@ -778,9 +793,9 @@ PYBIND11_MODULE(_core, m) {
              });
              return &self;
            })
-      .def_property("backpressure_threshold", nullptr,
+      .def_property("backpressure_threshold", &write_only_backpressure_threshold<UdpClient>,
                     [](UdpClient& self, size_t v) { self.backpressure_threshold(v); })
-      .def_property("backpressure_strategy", nullptr,
+      .def_property("backpressure_strategy", &write_only_backpressure_strategy<UdpClient>,
                     [](UdpClient& self, base::constants::BackpressureStrategy s) { self.backpressure_strategy(s); });
 
   // UdpServer
@@ -894,8 +909,8 @@ PYBIND11_MODULE(_core, m) {
              });
              return &self;
            })
-      .def_property("backpressure_threshold", nullptr,
+      .def_property("backpressure_threshold", &write_only_backpressure_threshold<UdpServer>,
                     [](UdpServer& self, size_t v) { self.backpressure_threshold(v); })
-      .def_property("backpressure_strategy", nullptr,
+      .def_property("backpressure_strategy", &write_only_backpressure_strategy<UdpServer>,
                     [](UdpServer& self, base::constants::BackpressureStrategy s) { self.backpressure_strategy(s); });
 }
