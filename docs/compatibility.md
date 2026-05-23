@@ -39,5 +39,5 @@ stability is not guaranteed across incompatible core versions before v1.0.
 
 ## Dependency policy
 
-Wheel builds use pybind11 3.x. Keep CI, release, and local verification build
+Wheel builds use pybind11 2.x. Keep CI, release, and local verification build
 dependency ranges aligned with `pyproject.toml`.
