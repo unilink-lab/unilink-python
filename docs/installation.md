@@ -32,7 +32,7 @@ python -m pip install . \
 ## Install with vcpkg
 
 The repository includes a `vcpkg.json` manifest that depends on
-`jwsung91-unilink`. Use a vcpkg checkout that contains `jwsung91-unilink` 0.7.2
+`jwsung91-unilink`. Use a vcpkg checkout that contains `jwsung91-unilink` 0.7.3
 or newer.
 
 ```bash
