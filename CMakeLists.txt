@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 
 project(
   unilink_python
-  VERSION 0.7.3
+  VERSION 0.7.4
   DESCRIPTION "Python bindings for the unilink C++ communication library"
   HOMEPAGE_URL "https://github.com/unilink-lab/unilink-python"
   LANGUAGES CXX

@@ -2,6 +2,16 @@
 
 All notable changes to unilink-python are documented in this file.
 
+## v0.7.4
+
+Release aligned with unilink C++ core 0.7.4.
+
+### Changed
+
+- Synced Python package metadata, runtime version, tests, documentation, and
+  CI validation with the unilink C++ core 0.7.4 release line.
+- Kept build and release dependency installation aligned with pybind11 3.x.
+
 ## v0.7.3
 
 ### Changed

@@ -1,6 +1,6 @@
 {
   "name": "unilink-python",
-  "version-string": "0.7.3",
+  "version-string": "0.7.4",
   "dependencies": [
     "jwsung91-unilink"
   ]

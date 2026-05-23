@@ -26,7 +26,7 @@ scripts/verify.sh --core-source /path/to/unilink
 
 The script always runs `git diff --check`. By default it validates a package
 install against a local core source tree and a vcpkg manifest install. Set
-`VCPKG_ROOT` to a vcpkg checkout that contains `jwsung91-unilink` 0.7.2 or
+`VCPKG_ROOT` to a vcpkg checkout that contains `jwsung91-unilink` 0.7.4 or
 newer, or pass `--skip-vcpkg` if that path is not applicable.
 
 To validate an installed core package, pass the installation prefix:

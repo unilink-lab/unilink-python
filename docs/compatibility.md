@@ -15,7 +15,7 @@ The current release line is validated against:
 
 | unilink-python | Validated unilink core refs |
 |---|---|
-| 0.7.3 | v0.7.3 |
+| 0.7.4 | v0.7.4 |
 
 Additional patch versions in the same minor line may also work, but CI
 validation tracks the versions listed above.
@@ -39,6 +39,5 @@ stability is not guaranteed across incompatible core versions before v1.0.
 
 ## Dependency policy
 
-The initial split release pins pybind11 below 3.0 for wheel builds. pybind11 3.x
-support should be tested and enabled in a later release line or patch once the
-Windows import smoke tests pass consistently.
+Wheel builds use pybind11 3.x. Keep CI, release, and local verification build
+dependency ranges aligned with `pyproject.toml`.

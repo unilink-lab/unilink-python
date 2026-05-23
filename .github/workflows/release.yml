@@ -9,7 +9,7 @@ on:
       tag_name:
         description: "Tag name to build and publish"
         required: true
-        default: "v0.7.3"
+        default: "v0.7.4"
       upload:
         description: "Upload release assets to GitHub"
         type: boolean
@@ -38,7 +38,7 @@ jobs:
       - name: Build source distribution
         run: |
           python -m pip install -U pip
-          python -m pip install build scikit-build-core "pybind11>=2.11,<3"
+          python -m pip install build scikit-build-core "pybind11>=3.0.4,<4"
           python -m build --sdist --no-isolation
 
       - name: Upload source distribution artifact
@@ -106,7 +106,7 @@ jobs:
       - name: Install Python build deps
         run: |
           python -m pip install -U pip
-          python -m pip install pytest scikit-build-core "pybind11>=2.11,<3"
+          python -m pip install pytest scikit-build-core "pybind11>=3.0.4,<4"
 
       - name: Install system deps on Linux
         if: runner.os == 'Linux'
@@ -230,7 +230,7 @@ jobs:
           cat > release-notes.md <<EOF
           ## unilink-python ${RELEASE_TAG}
 
-          Initial split release aligned with the matching unilink C++ core release line.
+          Release aligned with the matching unilink C++ core release line.
 
           See `CHANGELOG.md` for details.
           EOF
