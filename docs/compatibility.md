@@ -41,3 +41,19 @@ stability is not guaranteed across incompatible core versions before v1.0.
 
 Wheel builds use pybind11 2.x. Keep CI, release, and local verification build
 dependency ranges aligned with `pyproject.toml`.
+
+## UDS support
+
+`unilink-python` exposes `UdsClient`, `UdsServer`, `AsyncUdsClient`, and
+`AsyncUdsServer` when the underlying unilink core is built with UDS support.
+
+UDS support is intended for local IPC use cases such as Packet Probe Viewer
+integration.
+
+Validation status:
+
+| Platform | UDS Python API | Loopback test |
+|---|---:|---:|
+| Linux | supported | tested |
+| macOS | supported | tested |
+| Windows | supported if the underlying core/OS supports AF_UNIX | pending |

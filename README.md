@@ -19,6 +19,8 @@ lives in the main unilink repository.
 - Installation: [docs/installation.md](docs/installation.md)
 - API overview: [docs/api.md](docs/api.md)
 - Compatibility: [docs/compatibility.md](docs/compatibility.md)
+- Packet Probe Viewer IPC Example: [docs/packet-probe-viewer-ipc.md](docs/packet-probe-viewer-ipc.md)
+- Packaging & PyInstaller Notes: [docs/packaging.md](docs/packaging.md)
 - Contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
 - Release policy: [docs/release.md](docs/release.md)
 - Changelog: [CHANGELOG.md](CHANGELOG.md)

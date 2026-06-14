@@ -25,6 +25,7 @@ jobs:
 
     env:
       CMAKE_BUILD_PARALLEL_LEVEL: "2"
+      UNILINK_PYTHON_RUN_LOOPBACK_TESTS: "1"
 
     steps:
       - name: Checkout unilink-python

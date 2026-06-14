@@ -27,6 +27,12 @@ classifiers = [
   "Operating System :: Microsoft :: Windows",
 ]
 
+[project.optional-dependencies]
+test = [
+  "pytest>=8",
+  "pytest-asyncio>=0.23",
+]
+
 [project.urls]
 Homepage = "https://github.com/unilink-lab/unilink-python"
 Core = "https://github.com/jwsung91/unilink"

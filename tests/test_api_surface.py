@@ -57,3 +57,15 @@ def test_backpressure_properties_are_write_only():
         _ = client.backpressure_threshold
     with pytest.raises(AttributeError):
         _ = client.backpressure_strategy
+
+
+def test_uds_api_surface():
+    import unilink
+    assert hasattr(unilink, "UdsClient")
+    assert hasattr(unilink, "UdsServer")
+
+
+def test_async_uds_api_surface():
+    from unilink.asyncio import AsyncUdsClient, AsyncUdsServer
+    assert AsyncUdsClient is not None
+    assert AsyncUdsServer is not None
