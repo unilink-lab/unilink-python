@@ -29,10 +29,10 @@ jobs:
 
     steps:
       - name: Checkout unilink-python
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Checkout unilink core
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: jwsung91/unilink
           ref: ${{ env.UNILINK_CORE_REF }}
@@ -61,7 +61,7 @@ jobs:
 
       - name: Checkout vcpkg
         if: runner.os == 'macOS' || runner.os == 'Windows'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: microsoft/vcpkg
           path: vcpkg
@@ -134,10 +134,10 @@ jobs:
 
     steps:
       - name: Checkout unilink-python
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Checkout vcpkg
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: microsoft/vcpkg
           path: vcpkg
@@ -163,10 +163,10 @@ jobs:
 
     steps:
       - name: Checkout unilink-python
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Checkout unilink core
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: jwsung91/unilink
           ref: ${{ env.UNILINK_CORE_REF }}
