@@ -14,13 +14,13 @@ pytestmark = pytest.mark.integration
 
 @pytest.mark.asyncio
 @pytest.mark.skipif(not supports_uds(), reason="AF_UNIX is not available on this Python/OS")
-async def test_async_uds_client_reads_line_message(tmp_path):
+async def test_async_uds_client_reads_line_message(uds_socket_path):
     if not RUN_LOOPBACK_TESTS:
         pytest.skip(
             "set UNILINK_PYTHON_RUN_LOOPBACK_TESTS=1 to enable real transport loopback tests"
         )
 
-    socket_path = str(tmp_path / "u.sock")
+    socket_path = uds_socket_path
 
     server = unilink.UdsServer(socket_path)
     server.use_line_framer("\n", False, 65536)

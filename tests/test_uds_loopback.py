@@ -21,13 +21,13 @@ def supports_uds():
 pytestmark = pytest.mark.integration
 
 @pytest.mark.skipif(not supports_uds(), reason="AF_UNIX is not available on this Python/OS")
-def test_uds_client_server_loopback(tmp_path):
+def test_uds_client_server_loopback(uds_socket_path):
     if not RUN_LOOPBACK_TESTS:
         pytest.skip(
             "set UNILINK_PYTHON_RUN_LOOPBACK_TESTS=1 to enable real transport loopback tests"
         )
 
-    socket_path = str(tmp_path / "u.sock")
+    socket_path = uds_socket_path
 
     received = []
     connected = threading.Event()
@@ -53,13 +53,13 @@ def test_uds_client_server_loopback(tmp_path):
     server.stop()
 
 @pytest.mark.skipif(not supports_uds(), reason="AF_UNIX is not available on this Python/OS")
-def test_uds_line_framer_jsonl(tmp_path):
+def test_uds_line_framer_jsonl(uds_socket_path):
     if not RUN_LOOPBACK_TESTS:
         pytest.skip(
             "set UNILINK_PYTHON_RUN_LOOPBACK_TESTS=1 to enable real transport loopback tests"
         )
 
-    socket_path = str(tmp_path / "u.sock")
+    socket_path = uds_socket_path
 
     messages = []
     got_message = threading.Event()
