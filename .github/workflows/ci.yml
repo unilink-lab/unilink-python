@@ -11,7 +11,7 @@ on:
     branches: [main, develop]
 
 env:
-  UNILINK_CORE_REF: v0.7.4
+  UNILINK_CORE_REF: v0.8.2
 
 jobs:
   build-test:
@@ -25,7 +25,6 @@ jobs:
 
     env:
       CMAKE_BUILD_PARALLEL_LEVEL: "2"
-      UNILINK_PYTHON_RUN_LOOPBACK_TESTS: "1"
 
     steps:
       - name: Checkout unilink-python
@@ -46,7 +45,7 @@ jobs:
       - name: Install Python build deps
         run: |
           python -m pip install -U pip
-          python -m pip install pytest build scikit-build-core "pybind11>=2.11,<3"
+          python -m pip install pytest pytest-asyncio build scikit-build-core "pybind11>=2.11,<3"
 
       - name: Install system deps on Linux
         if: runner.os == 'Linux'
@@ -121,6 +120,8 @@ jobs:
           python -c "import unilink_py"
 
       - name: Run tests
+        env:
+          UNILINK_PYTHON_RUN_LOOPBACK_TESTS: ${{ runner.os != 'Windows' && '1' || '' }}
         run: |
           python -m pytest -q -m "not serial"
 
