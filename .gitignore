@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# agent-rules (local only)
+AGENTS.md
+CLAUDE.md
+GEMINI.md
