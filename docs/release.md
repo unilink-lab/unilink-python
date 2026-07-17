@@ -6,7 +6,7 @@ unilink-python follows the unilink C++ core release line.
 
 | unilink-python | unilink core |
 |---|---|
-| 0.7.x | 0.7.x |
+| 0.8.x | 0.8.x |
 
 unilink-python uses the same minor version as the supported unilink C++ core
 release line. Patch releases should align with the matching unilink C++ core
@@ -19,11 +19,12 @@ compatible with the same core minor release line.
 ## Release Checklist
 
 1. Confirm the target unilink core release line.
-2. Update `pyproject.toml`, `CMakeLists.txt`, and `src/unilink/_version.py`.
-3. Update `CHANGELOG.md` and `docs/compatibility.md`.
+2. Update `pyproject.toml`, `CMakeLists.txt`, `vcpkg.json`, and
+   `src/unilink/_version.py`.
+3. Update `CHANGELOG.md`, `docs/compatibility.md`, and the version table above.
 4. Run local verification against the supported core consumption paths.
 5. Push the release commit and confirm CI passes on Linux, macOS, and Windows.
-6. Create and push the matching git tag, for example `v0.7.4`.
+6. Create and push the matching git tag, for example `v0.8.9`.
 7. Confirm the Release workflow uploaded the source distribution and wheels to
    the GitHub release.
 
@@ -33,7 +34,7 @@ compatible with the same core minor release line.
 scripts/verify.sh --core-source ../unilink
 ```
 
-Set `VCPKG_ROOT` to a vcpkg checkout that contains `jwsung91-unilink` 0.7.4 or
+Set `VCPKG_ROOT` to a vcpkg checkout that contains `jwsung91-unilink` 0.8.9 or
 newer. To include installed-package validation, first install the matching core
 release and pass the prefix:
 

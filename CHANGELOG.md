@@ -2,6 +2,22 @@
 
 All notable changes to unilink-python are documented in this file.
 
+## v0.8.9
+
+Release aligned with unilink C++ core 0.8.9.
+
+### Changed
+
+- Synced Python package metadata, runtime version, tests, documentation, and
+  CI validation with the unilink C++ core 0.8.9 release line.
+- Fixed `CMakeLists.txt`, `vcpkg.json`, and `src/unilink/_version.py` still
+  reading `0.7.4` after the v0.8.8 bump only updated `pyproject.toml`; all
+  four version references now agree.
+
+unilink core v0.8.9 fixes an accept-then-drop race in Reliable-strategy
+blocking writes that could silently drop messages under concurrent load
+(jwsung91/unilink#518).
+
 ## v0.7.4
 
 Release aligned with unilink C++ core 0.7.4.

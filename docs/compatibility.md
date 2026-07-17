@@ -7,7 +7,7 @@ C++ core library.
 
 | unilink-python | Supported unilink core |
 |---|---|
-| 0.7.x | 0.7.x |
+| 0.8.x | 0.8.x |
 
 ## Validated core versions
 
@@ -15,7 +15,7 @@ The current release line is validated against:
 
 | unilink-python | Validated unilink core refs |
 |---|---|
-| 0.7.4 | v0.7.4 |
+| 0.8.9 | v0.8.9 |
 
 Additional patch versions in the same minor line may also work, but CI
 validation tracks the versions listed above.
