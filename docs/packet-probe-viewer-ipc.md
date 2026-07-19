@@ -1,18 +1,18 @@
 # Packet Probe Viewer IPC Example
 
 This example shows how a Python application can consume a Packet Probe JSONL IPC
-stream using `unilink-python`.
+stream using `Wirestead Python`.
 
 ## UDS JSONL client
 
 ```python
 import json
 import threading
-import unilink
+import wirestead
 
 socket_path = "/tmp/packet-probe.sock"
 
-client = unilink.UdsClient(socket_path)
+client = wirestead.UdsClient(socket_path)
 client.use_line_framer("\n", False, 65536)
 
 def on_message(ctx):
@@ -39,7 +39,7 @@ finally:
 ```python
 import asyncio
 import json
-from unilink.asyncio import AsyncUdsClient
+from wirestead.asyncio import AsyncUdsClient
 
 async def main():
     client = AsyncUdsClient("/tmp/packet-probe.sock")

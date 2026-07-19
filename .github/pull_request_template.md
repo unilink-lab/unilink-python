@@ -24,8 +24,8 @@
 - [ ] I have run `git diff --check`.
 - [ ] I have run `scripts/verify.sh`, or the equivalent checks below.
 - [ ] I have installed against a local core source tree.
-- [ ] I have installed against vcpkg `jwsung91-unilink`.
-- [ ] I have installed against an installed unilink CMake package, if applicable.
+- [ ] I have installed against vcpkg `wirestead`, if applicable.
+- [ ] I have installed against an installed Wirestead CMake package, if applicable.
 - [ ] I have run `python -m pytest -q -m "not serial and not integration"`.
 - [ ] I have run or confirmed formatting checks for C++ and CMake files.
 - [ ] I have updated documentation to reflect the change, if applicable.

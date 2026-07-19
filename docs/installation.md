@@ -3,37 +3,37 @@
 ## Development install with local core source
 
 ```bash
-git clone https://github.com/jwsung91/unilink.git
-git clone https://github.com/unilink-lab/unilink-python.git
+git clone https://github.com/wirestead/wirestead.git
+git clone https://github.com/wirestead/unilink-python.git
 
 cd unilink-python
 
 python -m pip install -U pip
 python -m pip install -e . \
-  -Ccmake.define.UNILINK_CORE_SOURCE_DIR=../unilink
+  -Ccmake.define.WIRESTEAD_CORE_SOURCE_DIR=../wirestead
 ```
 
-## Install with an installed unilink core package
+## Install with an installed Wirestead core package
 
 ```bash
-cmake -S ../unilink -B ../unilink-build \
+cmake -S ../wirestead -B ../wirestead-build \
   -DCMAKE_BUILD_TYPE=Release \
-  -DUNILINK_BUILD_TESTS=OFF \
-  -DUNILINK_BUILD_DOCS=OFF
+  -DWIRESTEAD_BUILD_TESTS=OFF \
+  -DWIRESTEAD_BUILD_DOCS=OFF
 
-cmake --build ../unilink-build --parallel
-cmake --install ../unilink-build --prefix ../unilink-install
+cmake --build ../wirestead-build --parallel
+cmake --install ../wirestead-build --prefix ../wirestead-install
 
 cd ../unilink-python
 python -m pip install . \
-  -Ccmake.define.CMAKE_PREFIX_PATH=../unilink-install
+  -Ccmake.define.CMAKE_PREFIX_PATH=../wirestead-install
 ```
 
 ## Install with vcpkg
 
 The repository includes a `vcpkg.json` manifest that depends on
-`jwsung91-unilink`. Use a vcpkg checkout that contains `jwsung91-unilink` 0.7.4
-or newer.
+`wirestead`. This path requires a vcpkg checkout that contains the official
+`wirestead` port for the matching 0.9.x release line.
 
 ```bash
 export VCPKG_ROOT=/path/to/vcpkg
@@ -45,6 +45,7 @@ python -m pip install . \
 ## Smoke test
 
 ```bash
+python -c "import wirestead; print(wirestead.__version__)"
 python -c "import unilink; print(unilink.__version__)"
 python -c "import unilink_py"
 ```
@@ -52,9 +53,9 @@ python -c "import unilink_py"
 ## Local verification
 
 ```bash
-scripts/verify.sh --core-source ../unilink
+scripts/verify.sh --core-source ../wirestead
 ```
 
 Set `VCPKG_ROOT` to run vcpkg validation, or pass `--skip-vcpkg`. Add
-`--installed-prefix /path/to/unilink/install` to validate against an installed
+`--installed-prefix /path/to/wirestead/install` to validate against an installed
 core package.

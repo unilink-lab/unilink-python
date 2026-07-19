@@ -5,7 +5,7 @@ import time
 
 import pytest
 
-RUN_LOOPBACK_TESTS = os.environ.get("UNILINK_PYTHON_RUN_LOOPBACK_TESTS") == "1"
+RUN_LOOPBACK_TESTS = os.environ.get("WIRESTEAD_PYTHON_RUN_LOOPBACK_TESTS") == "1"
 
 
 def wait_until(predicate, timeout=5.0, interval=0.01):
@@ -30,18 +30,18 @@ def reserve_tcp_port():
 def test_tcp_loopback_smoke():
     if not RUN_LOOPBACK_TESTS:
         pytest.skip(
-            "set UNILINK_PYTHON_RUN_LOOPBACK_TESTS=1 to enable real transport loopback tests"
+            "set WIRESTEAD_PYTHON_RUN_LOOPBACK_TESTS=1 to enable real transport loopback tests"
         )
 
-    import unilink
+    import wirestead
 
     port = reserve_tcp_port()
     server_connected = threading.Event()
     server_message = threading.Event()
     received = []
 
-    server = unilink.TcpServer(port)
-    client = unilink.TcpClient("127.0.0.1", port)
+    server = wirestead.TcpServer(port)
+    client = wirestead.TcpClient("127.0.0.1", port)
 
     def on_connect(_ctx):
         server_connected.set()
