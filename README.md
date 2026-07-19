@@ -1,18 +1,18 @@
-# unilink-python
+# Wirestead Python
 
-Python bindings for the unilink C++ communication library.
+Python bindings for the Wirestead C++ communication library.
 
 This repository contains the Python package and pybind11 bindings. The C++ core
-lives in the main unilink repository.
+lives in the main Wirestead repository.
 
-- Core library: https://github.com/jwsung91/unilink
-- Python bindings: https://github.com/unilink-lab/unilink-python
+- Core library: https://github.com/wirestead/wirestead
+- Python bindings: https://github.com/wirestead/unilink-python
 
 ## Package Layout
 
-- Python package: `unilink`
-- Compiled extension: `unilink._core`
-- Backward compatibility shim: `unilink_py`
+- Python package: `wirestead`
+- Compiled extension: `wirestead._core`
+- Backward compatibility packages: `unilink`, `unilink_py`
 
 ## Documentation
 
@@ -33,36 +33,36 @@ new transport functionality.
 ### Development mode with local core source
 
 ```bash
-git clone https://github.com/jwsung91/unilink.git
-git clone https://github.com/unilink-lab/unilink-python.git
+git clone https://github.com/wirestead/wirestead.git
+git clone https://github.com/wirestead/unilink-python.git
 
 cd unilink-python
 
 python -m pip install -U pip
 python -m pip install -e . \
-  -Ccmake.define.UNILINK_CORE_SOURCE_DIR=../unilink
+  -Ccmake.define.WIRESTEAD_CORE_SOURCE_DIR=../wirestead
 ```
 
 ### Installed core package
 
 ```bash
-cmake -S ../unilink -B ../unilink-build \
+cmake -S ../wirestead -B ../wirestead-build \
   -DCMAKE_BUILD_TYPE=Release \
-  -DUNILINK_BUILD_TESTS=OFF \
-  -DUNILINK_BUILD_DOCS=OFF
+  -DWIRESTEAD_BUILD_TESTS=OFF \
+  -DWIRESTEAD_BUILD_DOCS=OFF
 
-cmake --build ../unilink-build --parallel
-cmake --install ../unilink-build --prefix ../unilink-install
+cmake --build ../wirestead-build --parallel
+cmake --install ../wirestead-build --prefix ../wirestead-install
 
 cd ../unilink-python
 python -m pip install . \
-  -Ccmake.define.CMAKE_PREFIX_PATH=../unilink-install
+  -Ccmake.define.CMAKE_PREFIX_PATH=../wirestead-install
 ```
 
 ### vcpkg core package
 
 The repository includes a `vcpkg.json` manifest that depends on
-`jwsung91-unilink`.
+`wirestead`.
 
 ```bash
 export VCPKG_ROOT=/path/to/vcpkg
@@ -74,6 +74,7 @@ python -m pip install . \
 ## Import Smoke
 
 ```bash
+python -c "import wirestead; print(wirestead.__version__)"
 python -c "import unilink; print(unilink.__version__)"
 python -c "import unilink_py"
 ```
@@ -88,29 +89,32 @@ Real TCP loopback coverage is marked as `integration` and is disabled unless
 explicitly requested:
 
 ```bash
-UNILINK_PYTHON_RUN_LOOPBACK_TESTS=1 python -m pytest -q -m "integration"
+WIRESTEAD_PYTHON_RUN_LOOPBACK_TESTS=1 python -m pytest -q -m "integration"
 ```
 
 For local validation across supported core consumption paths, use:
 
 ```bash
-scripts/verify.sh --core-source ../unilink
+scripts/verify.sh --core-source ../wirestead
 ```
 
 Set `VCPKG_ROOT` to enable the vcpkg path, or pass `--skip-vcpkg` when it is
-not applicable. Add `--installed-prefix /path/to/unilink/install` to validate
+not applicable. Add `--installed-prefix /path/to/wirestead/install` to validate
 against an installed core package.
 
 ## Compatibility
 
-unilink-python follows the same minor release line as the unilink C++ core.
+Wirestead Python follows the same minor release line as the Wirestead C++ core.
 
-| unilink-python | unilink core |
+| Wirestead Python | Wirestead core |
 |---|---|
-| 0.7.x | 0.7.x |
+| 0.9.x | 0.9.x |
 
 Patch versions may differ when Python-only packaging, binding, documentation, or
 CI fixes do not require a matching core patch release.
 
 The Python package is currently experimental until the C++ public API reaches a
 stable release line.
+
+Existing source that imports `unilink` or `unilink_py` remains supported as a
+compatibility path in the 0.9.x line, but new code should import `wirestead`.

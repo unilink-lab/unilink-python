@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.21)
 
 project(
-  unilink_python
-  VERSION 0.7.4
-  DESCRIPTION "Python bindings for the unilink C++ communication library"
-  HOMEPAGE_URL "https://github.com/unilink-lab/unilink-python"
+  wirestead_python
+  VERSION 0.9.0
+  DESCRIPTION "Python bindings for the Wirestead C++ communication library"
+  HOMEPAGE_URL "https://github.com/wirestead/unilink-python"
   LANGUAGES CXX
 )
 
@@ -21,16 +21,16 @@ find_package(
 )
 find_package(pybind11 CONFIG REQUIRED)
 
-include(cmake/FindOrBuildUnilinkCore.cmake)
+include(cmake/FindOrBuildWiresteadCore.cmake)
 
-set(UNILINK_VERSION ${PROJECT_VERSION})
+set(WIRESTEAD_VERSION ${PROJECT_VERSION})
 configure_file(
   bindings/python/module.cpp.in
   "${CMAKE_CURRENT_BINARY_DIR}/generated/module.cpp" @ONLY
 )
 
 pybind11_add_module(_core "${CMAKE_CURRENT_BINARY_DIR}/generated/module.cpp")
-target_link_libraries(_core PRIVATE ${UNILINK_PYTHON_CORE_TARGET})
+target_link_libraries(_core PRIVATE ${WIRESTEAD_PYTHON_CORE_TARGET})
 target_compile_features(_core PRIVATE cxx_std_20)
 
 if(APPLE)
@@ -41,7 +41,7 @@ endif()
 
 install(
   TARGETS _core
-  LIBRARY DESTINATION unilink
-  RUNTIME DESTINATION unilink
+  LIBRARY DESTINATION wirestead
+  RUNTIME DESTINATION wirestead
 )
 install(FILES src/unilink_py.py DESTINATION .)

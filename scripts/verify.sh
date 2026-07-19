@@ -9,10 +9,12 @@ RUN_SOURCE=1
 RUN_VCPKG=1
 RUN_INSTALLED=0
 RUN_INTEGRATION=0
-CORE_SOURCE_DIR="${UNILINK_CORE_SOURCE_DIR:-}"
-INSTALLED_PREFIX="${UNILINK_INSTALL_PREFIX:-}"
+CORE_SOURCE_DIR="${WIRESTEAD_CORE_SOURCE_DIR:-}"
+INSTALLED_PREFIX="${WIRESTEAD_INSTALL_PREFIX:-}"
 
-if [[ -z "$CORE_SOURCE_DIR" && -d "$PROJECT_ROOT/../unilink" ]]; then
+if [[ -z "$CORE_SOURCE_DIR" && -d "$PROJECT_ROOT/../wirestead" ]]; then
+  CORE_SOURCE_DIR="$PROJECT_ROOT/../wirestead"
+elif [[ -z "$CORE_SOURCE_DIR" && -d "$PROJECT_ROOT/../unilink" ]]; then
   CORE_SOURCE_DIR="$PROJECT_ROOT/../unilink"
 fi
 
@@ -21,7 +23,7 @@ usage() {
 Usage: scripts/verify.sh [options]
 
 Options:
-  --core-source PATH        Path to the unilink C++ core source tree.
+  --core-source PATH        Path to the Wirestead C++ core source tree.
   --skip-source             Skip the local core source package install.
   --skip-vcpkg              Skip the vcpkg package install.
   --installed-prefix PATH   Run installed-package validation with PATH.
@@ -88,6 +90,7 @@ create_venv() {
 
 run_python_smoke() {
   local python="$1"
+  "$python" -c "import wirestead; print(wirestead.__version__)"
   "$python" -c "import unilink; print(unilink.__version__)"
   "$python" -c "import unilink_py"
 }
@@ -95,9 +98,9 @@ run_python_smoke() {
 run_tests() {
   local python="$1"
   if [[ "$RUN_INTEGRATION" -eq 1 ]]; then
-    UNILINK_PYTHON_RUN_LOOPBACK_TESTS=1 "$python" -m pytest -q -m "not serial"
+    WIRESTEAD_PYTHON_RUN_LOOPBACK_TESTS=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 "$python" -m pytest -q -p pytest_asyncio.plugin -m "not serial"
   else
-    "$python" -m pytest -q -m "not serial and not integration"
+    PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 "$python" -m pytest -q -p pytest_asyncio.plugin -m "not serial and not integration"
   fi
 }
 
@@ -110,7 +113,7 @@ install_and_test() {
 
   section "Installing Python tooling for ${name}"
   "$python" -m pip install -U pip
-  "$python" -m pip install pytest scikit-build-core "pybind11>=2.11,<3"
+  "$python" -m pip install "pytest>=8,<9" "pytest-asyncio>=1.4.0" scikit-build-core "pybind11>=2.11,<3"
 
   if [[ "$name" == "installed" ]]; then
     install_args+=(
@@ -118,7 +121,7 @@ install_and_test() {
     )
   fi
 
-  section "Installing unilink-python via ${name}"
+  section "Installing Wirestead Python via ${name}"
   "$python" -m pip install . --no-build-isolation "${install_args[@]}"
 
   section "Running smoke tests for ${name}"
@@ -131,7 +134,7 @@ git diff --check
 
 if [[ "$RUN_SOURCE" -eq 1 ]]; then
   if [[ -z "$CORE_SOURCE_DIR" ]]; then
-    echo "UNILINK_CORE_SOURCE_DIR is not set and ../unilink does not exist." >&2
+    echo "WIRESTEAD_CORE_SOURCE_DIR is not set and ../wirestead does not exist." >&2
     echo "Pass --core-source PATH or --skip-source." >&2
     exit 1
   elif [[ ! -f "$CORE_SOURCE_DIR/CMakeLists.txt" ]]; then
@@ -140,7 +143,7 @@ if [[ "$RUN_SOURCE" -eq 1 ]]; then
   fi
   install_and_test \
     "source" \
-    "--config-settings=cmake.define.UNILINK_CORE_SOURCE_DIR=$CORE_SOURCE_DIR"
+    "--config-settings=cmake.define.WIRESTEAD_CORE_SOURCE_DIR=$CORE_SOURCE_DIR"
 fi
 
 if [[ "$RUN_VCPKG" -eq 1 ]]; then

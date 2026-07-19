@@ -2,30 +2,30 @@
 
 ## Core compatibility
 
-unilink-python does not implement transports itself. It binds to the unilink
+Wirestead Python does not implement transports itself. It binds to the Wirestead
 C++ core library.
 
-| unilink-python | Supported unilink core |
+| Wirestead Python | Supported Wirestead core |
 |---|---|
-| 0.7.x | 0.7.x |
+| 0.9.x | 0.9.x |
 
 ## Validated core versions
 
 The current release line is validated against:
 
-| unilink-python | Validated unilink core refs |
+| Wirestead Python | Validated Wirestead core refs |
 |---|---|
-| 0.7.4 | v0.7.4 |
+| 0.9.0 | v0.9.0 |
 
 Additional patch versions in the same minor line may also work, but CI
 validation tracks the versions listed above.
 
 ## Versioning
 
-unilink-python follows the unilink C++ core minor release line.
+Wirestead Python follows the Wirestead C++ core minor release line.
 
 Patch versions may differ when Python packaging, binding, documentation, or CI
-fixes do not require a matching unilink core patch release.
+fixes do not require a matching Wirestead core patch release.
 
 ## Stability
 
@@ -34,7 +34,7 @@ stable release line.
 
 ## ABI policy
 
-Python wheels may statically link or bundle the unilink C++ core. C++ ABI
+Python wheels may statically link or bundle the Wirestead C++ core. C++ ABI
 stability is not guaranteed across incompatible core versions before v1.0.
 
 ## Dependency policy
@@ -44,8 +44,8 @@ dependency ranges aligned with `pyproject.toml`.
 
 ## UDS support
 
-`unilink-python` exposes `UdsClient`, `UdsServer`, `AsyncUdsClient`, and
-`AsyncUdsServer` when the underlying unilink core is built with UDS support.
+`Wirestead Python` exposes `UdsClient`, `UdsServer`, `AsyncUdsClient`, and
+`AsyncUdsServer` when the underlying Wirestead core is built with UDS support.
 
 UDS support is intended for local IPC use cases such as Packet Probe Viewer
 integration.

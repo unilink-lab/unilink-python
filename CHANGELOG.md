@@ -1,6 +1,24 @@
 # Changelog
 
-All notable changes to unilink-python are documented in this file.
+All notable changes to Wirestead Python are documented in this file.
+
+## v0.9.0
+
+Release aligned with Wirestead C++ core 0.9.0.
+
+### Changed
+
+- Renamed the canonical Python distribution and import package to `wirestead`.
+- Moved the compiled extension to `wirestead._core`.
+- Updated the build to consume the canonical Wirestead C++ package, target, and
+  headers.
+
+### Compatibility
+
+- Kept `import unilink` and `import unilink_py` as source compatibility shims
+  that re-export the `wirestead` package.
+- Kept `UNILINK_CORE_SOURCE_DIR` as a build-time fallback for
+  `WIRESTEAD_CORE_SOURCE_DIR`.
 
 ## v0.7.4
 

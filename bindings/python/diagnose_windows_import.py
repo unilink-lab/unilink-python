@@ -78,16 +78,24 @@ def main() -> int:
         print("This diagnostic helper is intended for Windows only.")
         return 0
 
-    install_path = Path(os.environ.get("UNILINK_INSTALL_PATH", ""))
-    package_path = Path(os.environ.get("UNILINK_PACKAGE_PATH", ""))
+    install_path = Path(
+        os.environ.get("WIRESTEAD_INSTALL_PATH")
+        or os.environ.get("UNILINK_INSTALL_PATH", "")
+    )
+    package_path = Path(
+        os.environ.get("WIRESTEAD_PACKAGE_PATH")
+        or os.environ.get("UNILINK_PACKAGE_PATH", "")
+    )
 
     _print_section("Interpreter")
     print(f"sys.executable: {sys.executable}")
     print(f"sys.version: {sys.version}")
 
     _print_section("Environment")
-    print(f"UNILINK_INSTALL_PATH: {install_path}")
-    print(f"UNILINK_PACKAGE_PATH: {package_path}")
+    print(f"WIRESTEAD_INSTALL_PATH: {install_path}")
+    print(f"WIRESTEAD_PACKAGE_PATH: {package_path}")
+    print(f"UNILINK_INSTALL_PATH fallback: {os.environ.get('UNILINK_INSTALL_PATH', '')}")
+    print(f"UNILINK_PACKAGE_PATH fallback: {os.environ.get('UNILINK_PACKAGE_PATH', '')}")
     _print_path_list("PYTHONPATH", os.environ.get("PYTHONPATH"))
     _print_path_list("PATH", os.environ.get("PATH"))
 
@@ -102,14 +110,19 @@ def main() -> int:
         if package_path.is_dir():
             _dll_dir_handles.append(os.add_dll_directory(str(package_path.resolve())))
             print(f"added (package): {package_path.resolve()}")
-        
+
         # Also add relevant PATH entries as fallback for dependencies
         for path_str in os.environ.get("PATH", "").split(";"):
             if not path_str:
                 continue
             path = Path(path_str)
             path_lower = path_str.lower()
-            if "vcpkg" in path_lower or "bin" in path_lower or "unilink" in path_lower:
+            if (
+                "vcpkg" in path_lower
+                or "bin" in path_lower
+                or "wirestead" in path_lower
+                or "unilink" in path_lower
+            ):
                 if path.is_dir():
                     try:
                         _dll_dir_handles.append(os.add_dll_directory(str(path.resolve())))
@@ -125,40 +138,43 @@ def main() -> int:
     if len(sys.path) > 12:
         print(f"  ... ({len(sys.path) - 12} more)")
 
-    extension_candidates = sorted(package_path.glob("unilink_py*.pyd"))
-    runtime_candidates = sorted(package_path.glob("unilink*.dll"))
+    extension_candidates = sorted(package_path.glob("wirestead/_core*.pyd"))
+    extension_candidates.extend(sorted(package_path.glob("unilink/_core*.pyd")))
+    extension_candidates.extend(sorted(package_path.glob("unilink_py*.pyd")))
+    runtime_candidates = sorted(package_path.glob("wirestead*.dll"))
+    runtime_candidates.extend(sorted(package_path.glob("unilink*.dll")))
 
     # Binary load checks run BEFORE find_spec so that ctypes.WinDLL errors
     # (which name the missing DLL) are visible even when the Python import
     # subsequently crashes before reaching this section.
     _print_section("Binary Load Checks")
     if not extension_candidates:
-        print("No unilink_py*.pyd found in package directory.")
+        print("No Wirestead extension .pyd found in package directory.")
     for candidate in extension_candidates:
         _load_binary(candidate)
 
     if not runtime_candidates:
-        print("No unilink*.dll found in package directory.")
+        print("No Wirestead runtime .dll found in package directory.")
     for candidate in runtime_candidates:
         _load_binary(candidate)
 
     _print_section("Import Specs")
-    for _spec_name in ("unilink", "unilink.unilink_py"):
+    for _spec_name in ("wirestead", "wirestead._core", "unilink", "unilink_py"):
         try:
             _spec = importlib.util.find_spec(_spec_name)
             print(f"spec({_spec_name}): {_spec}")
-        except Exception as _exc:
-            print(f"spec({_spec_name}): failed — {_exc}")
+        except Exception as exc:
+            print(f"spec({_spec_name}): failed: {exc}")
 
     _print_section("Python Import")
     try:
-        import unilink
+        import wirestead
     except Exception:
         traceback.print_exc()
         return 1
 
-    print("Successfully imported unilink")
-    print(f"unilink module file: {getattr(unilink, '__file__', '<unknown>')}")
+    print("Successfully imported wirestead")
+    print(f"wirestead module file: {getattr(wirestead, '__file__', '<unknown>')}")
     return 0
 
 

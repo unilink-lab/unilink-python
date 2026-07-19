@@ -2,10 +2,12 @@ import os
 import socket
 import threading
 import time
-import pytest
-import unilink
 
-RUN_LOOPBACK_TESTS = os.environ.get("UNILINK_PYTHON_RUN_LOOPBACK_TESTS") == "1"
+import pytest
+import wirestead
+
+RUN_LOOPBACK_TESTS = os.environ.get("WIRESTEAD_PYTHON_RUN_LOOPBACK_TESTS") == "1"
+
 
 def wait_until(predicate, timeout=5.0, interval=0.01):
     deadline = time.time() + timeout
@@ -15,16 +17,19 @@ def wait_until(predicate, timeout=5.0, interval=0.01):
         time.sleep(interval)
     return False
 
+
 def supports_uds():
     return hasattr(socket, "AF_UNIX")
 
+
 pytestmark = pytest.mark.integration
+
 
 @pytest.mark.skipif(not supports_uds(), reason="AF_UNIX is not available on this Python/OS")
 def test_uds_client_server_loopback(uds_socket_path):
     if not RUN_LOOPBACK_TESTS:
         pytest.skip(
-            "set UNILINK_PYTHON_RUN_LOOPBACK_TESTS=1 to enable real transport loopback tests"
+            "set WIRESTEAD_PYTHON_RUN_LOOPBACK_TESTS=1 to enable real transport loopback tests"
         )
 
     socket_path = uds_socket_path
@@ -33,14 +38,14 @@ def test_uds_client_server_loopback(uds_socket_path):
     connected = threading.Event()
     got_data = threading.Event()
 
-    server = unilink.UdsServer(socket_path)
+    server = wirestead.UdsServer(socket_path)
     server.max_clients(1)
     server.on_connect(lambda ctx: connected.set())
     server.on_data(lambda ctx: (received.append(bytes(ctx.data)), got_data.set()))
 
     assert server.start_sync()
 
-    client = unilink.UdsClient(socket_path)
+    client = wirestead.UdsClient(socket_path)
     assert client.start_sync()
 
     assert connected.wait(2.0)
@@ -52,11 +57,12 @@ def test_uds_client_server_loopback(uds_socket_path):
     client.stop()
     server.stop()
 
+
 @pytest.mark.skipif(not supports_uds(), reason="AF_UNIX is not available on this Python/OS")
 def test_uds_line_framer_jsonl(uds_socket_path):
     if not RUN_LOOPBACK_TESTS:
         pytest.skip(
-            "set UNILINK_PYTHON_RUN_LOOPBACK_TESTS=1 to enable real transport loopback tests"
+            "set WIRESTEAD_PYTHON_RUN_LOOPBACK_TESTS=1 to enable real transport loopback tests"
         )
 
     socket_path = uds_socket_path
@@ -64,13 +70,15 @@ def test_uds_line_framer_jsonl(uds_socket_path):
     messages = []
     got_message = threading.Event()
 
-    server = unilink.UdsServer(socket_path)
+    server = wirestead.UdsServer(socket_path)
     server.use_line_framer("\n", False, 65536)
-    server.on_message(lambda ctx: (messages.append(bytes(ctx.data).decode("utf-8")), got_message.set()))
+    server.on_message(
+        lambda ctx: (messages.append(bytes(ctx.data).decode("utf-8")), got_message.set())
+    )
 
     assert server.start_sync()
 
-    client = unilink.UdsClient(socket_path)
+    client = wirestead.UdsClient(socket_path)
     assert client.start_sync()
 
     # Wait for connection

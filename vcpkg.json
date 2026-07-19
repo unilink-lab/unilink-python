@@ -1,7 +1,7 @@
 {
-  "name": "unilink-python",
-  "version-string": "0.7.4",
+  "name": "wirestead-python",
+  "version-string": "0.9.0",
   "dependencies": [
-    "jwsung91-unilink"
+    "wirestead"
   ]
 }
