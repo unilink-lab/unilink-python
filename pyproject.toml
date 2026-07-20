@@ -34,7 +34,7 @@ test = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/wirestead/unilink-python"
+Homepage = "https://github.com/wirestead/wirestead-python"
 Core = "https://github.com/wirestead/wirestead"
 
 [tool.scikit-build]

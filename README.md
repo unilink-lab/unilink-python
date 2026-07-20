@@ -6,7 +6,7 @@ This repository contains the Python package and pybind11 bindings. The C++ core
 lives in the main Wirestead repository.
 
 - Core library: https://github.com/wirestead/wirestead
-- Python bindings: https://github.com/wirestead/unilink-python
+- Python bindings: https://github.com/wirestead/wirestead-python
 
 ## Package Layout
 
@@ -34,9 +34,9 @@ new transport functionality.
 
 ```bash
 git clone https://github.com/wirestead/wirestead.git
-git clone https://github.com/wirestead/unilink-python.git
+git clone https://github.com/wirestead/wirestead-python.git
 
-cd unilink-python
+cd wirestead-python
 
 python -m pip install -U pip
 python -m pip install -e . \
@@ -54,7 +54,7 @@ cmake -S ../wirestead -B ../wirestead-build \
 cmake --build ../wirestead-build --parallel
 cmake --install ../wirestead-build --prefix ../wirestead-install
 
-cd ../unilink-python
+cd ../wirestead-python
 python -m pip install . \
   -Ccmake.define.CMAKE_PREFIX_PATH=../wirestead-install
 ```
